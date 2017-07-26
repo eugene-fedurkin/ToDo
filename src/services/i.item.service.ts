@@ -1,4 +1,4 @@
-import { Item } from '../models/item';
+import { Item } from '../models/';
 
 export interface IItemService {
   createItem(item: Item): Promise<Item>;

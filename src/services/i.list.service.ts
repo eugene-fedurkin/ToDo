@@ -1,4 +1,4 @@
-import { List } from '../models/list';
+import { List } from '../models/';
 
 export interface IListService {
   createList(list: List): Promise<List>;

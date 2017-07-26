@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { IUserService } from '../';
-import { Credentials, User } from '../models/';
+import { Credentials, User } from '.../models/';
 
 @Injectable()
 export class UserServicesMock implements IUserService {
