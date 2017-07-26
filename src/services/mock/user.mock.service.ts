@@ -1,11 +1,12 @@
-import { IUserService } from '../interfaces/IUserService';
-import { User } from '../models/user';
-import { Credentials } from '../models/credentials';
+import { Injectable } from '@angular/core';
 
+import { IUserService } from '../';
+import { Credentials, User } from '../models/';
 
+@Injectable()
 export class UserServicesMock implements IUserService {
   constructor (public store: any) {
-    store.currentUser = <User>{ email: '', lists: []};
+    store.currentUser = <User>{ email: '', lists: [] };
   }
   public register(credentials: Credentials): User {
     let user = new User;
@@ -24,7 +25,7 @@ export class UserServicesMock implements IUserService {
     this.store.currentUser = email;
     return this.store.currentUser.email;
   }
-  public delete(): User{
+  public delete(): User {
     this.store.currentUser = null; // ???
     return null;
   }
