@@ -3,50 +3,31 @@ import { User, List } from '../models/';
 import { Injectable } from '@angular/core';
 
 export class Store {
-  public store: User[];
+  public store: User;
 
   public addUser(user: User) {
-    for (let i of this.store) {
-      if (i.email === user.email) {
-        console.log('User exist');
+    if (!this.store) this.store = user;
+  }
+
+  public deleteUser() {
+    this.store = null;
+  }
+
+  public addList(currentList: List) {
+    for (let list of this.store.lists) {
+      if (list.title === currentList.title) {
+        console.log('list with this name already exists');
         return;
       }
     }
-    this.store.push(user);
+    this.store.lists.push(currentList);
   }
 
-  public deleteUser(currentUser: User) {
-    for (let i of this.store) {
-      if (i.email === currentUser.email) {
-        this.store.splice(this.store.indexOf(i), 1);
+  public deleteList(currentList: List) {
+    for (let list of this.store.lists) {
+      if (list.title === currentList.title) {
+        // delete
         return;
-      }
-    }
-  }
-
-  public addList(user: User, currentList: List) {
-    for (let savedUser of this.store) {
-      if (savedUser.email === user.email) {
-        for (let list of savedUser.lists) {
-          if (list.title === currentList.title) {
-            console.log('list with this name already exists');
-            return;
-          }
-        }
-        savedUser.lists.push(currentList);
-      }
-    }
-  }
-
-    public deleteList(user: User, currentList: List) {
-    for (let savedUser of this.store) {
-      if (savedUser.email === user.email) {
-        for (let list of savedUser.lists) {
-          if (list.title === currentList.title) {
-            // delete
-            return;
-          }
-        }
       }
     }
   }
