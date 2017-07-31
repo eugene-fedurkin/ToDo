@@ -2,58 +2,56 @@ import { User, List, Item } from '../models/';
 
 import { Injectable } from '@angular/core';
 
+@Injectable()
 export class Store {
-  public store: User;
+  public currentUser: User;
 
-  public addUser(user: User) {
-    if (!this.store) this.store = user;
+  public saveUser(user: User) {
+    if (!this.currentUser) this.currentUser = user;
   }
 
   public deleteUser() {
-    this.store = null;
+    this.currentUser = null;
   }
 
-  public addList(currentList: List) {
-    for (let list of this.store.lists) {
-      if (list.title === currentList.title) {
-        console.log('list with this name already exists');
+  public saveList(currentList: List, id?: number) {
+    for (let list of this.currentUser.lists) {
+      if (list.id === currentList.id) list.title = currentList.title;
+      return Promise.resolve(list);
+    }
+    this.currentUser.lists.push(currentList);
+    return Promise.resolve(currentList);
+  }
+
+  public deleteList(id: number) {
+    for (let i in this.currentUser.lists) {
+      if (this.currentUser.lists[i].id === id) {
+        this.currentUser.lists.splice(+i, 1);
         return;
       }
     }
-    this.store.lists.push(currentList);
   }
 
-  public deleteList(currentList: List) {
-    for (let i = 0; i < this.store.lists.length; i++) {
-      if (this.store.lists[i].title === currentList.title) {
-        this.store.lists.splice(i, 1);
+  public saveItem(currentItem: Item, listId?: number) {
+    let list = this.currentUser.lists.find(list => list.id === listId);
+    //let item = list.items.find(item => currentItem.id === item.id);
+    
+    for (let item in list.items) {
+      if (list.items[item].id === currentItem.id) {
+        list.items.splice(+item, 1, currentItem);
         return;
       }
     }
-  }
-  public addItem(currentList: List, currentItem: Item) {
-    for (let i = 0; i < this.store.lists.length; i++) {
-      if (currentList.title === this.store.lists[i].title) {
-        for (let item of this.store.lists[i].items) {
-          if (item.title === currentItem.title) {
-            console.log('item with this name already exists');
-            return;
-          }
-        }
-        this.store.lists[i].items.push(currentItem);
-      }
-    }
+    list.items.push(currentItem);
   }
 
-  public deleteItem(currentList: List, currentItem: Item) {
-    for (let i = 0; i < this.store.lists.length; i++) {
-      if (currentList.title === this.store.lists[i].title) {
-        for (let j = 0; j < this.store.lists[i].items.length; j++) {
-          if (this.store.lists[i].items[j].title === currentItem.title) {
-            this.store.lists[i].items.splice(j, 1);
-            return;
-          }
-        }
+  public deleteItem(listId: number, id: number) {
+    let list = this.currentUser.lists.find(list => list.id === listId);
+    
+    for (let item in list.items) {
+      if (list.items[item].id === id) {
+        list.items.splice(+item, 1);
+        return;
       }
     }
   }

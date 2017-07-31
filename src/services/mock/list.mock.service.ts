@@ -1,34 +1,43 @@
 import { Injectable } from '@angular/core';
 
 
-import { IListService, UserServicesMock } from '../';
-import { List, Item } from '.../models/';
+import { IListService } from '../';
+import { List, Item } from '../../models/';
+import { Store } from '../../store/store';
 
 @Injectable()
 export class ListServicesMock implements IListService {
-  constructor(private userServicesMock: UserServicesMock) {
-    userServicesMock.store.currentList.lists = [<List>{ id: 1, title: '', items: [] }]; // --- Array?
-  }
-  createList(list: List): List {
-    let listNew = new List;
-    listNew.id = list.id;
+  constructor(private store: Store) {}
+
+  private nextId: number = 0;
+
+  createList(list: List): Promise<List> {
+    let listNew = new List();
+    listNew.id = this.nextId++;
     listNew.title = list.title;
     listNew.items = list.items;
-    this.userServicesMock.store.currentList.lists = listNew;
-    return listNew;
+    this.store.saveList(listNew);
+    return Promise.resolve(listNew);
   }
-  getList(): List {
-    return this.userServicesMock.store.currentList.lists;
+
+  getList(id: number): Promise<List> {
+    for (let list of this.store.currentUser.lists) { 
+      if (list.id === id)
+        return Promise.resolve(list);
+    }
+    return Promise.reject(new Error("error"));
   }
-  getListVerbose(): List {
+
+  getListVerbose(): Promise<List> {
     return null; 
   }
-  updateList(title: string): List {
-    this.userServicesMock.store.currentList.lists.title = title;
-    return this.userServicesMock.store.currentList.lists.title;
+
+  updateList(list: List, id: number): Promise<List> {
+    return this.store.saveList(list, id);
   }
-  delete(): List {
-    this.userServicesMock.store.currentList.lists = null;
+
+  delete(id: number): Promise<List> {
+    this.store.deleteList(id);
     return null;
   }
 }

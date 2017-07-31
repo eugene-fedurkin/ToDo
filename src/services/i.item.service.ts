@@ -1,11 +1,11 @@
 import { Item } from '../models/';
 
-export interface IItemService {
-  createItem(item: Item): Promise<Item>;
-  getItem(): Promise<Item>;
-  getItemVerbose(): Promise<Item>;
-  getItemInList(): Promise<Item>;
-  getItemVerboseInList(): Promise<Item>;
-  updateItem(item: Item): Promise<Item>;
-  delete(): Promise<Item>;
+export abstract class IItemService {
+  abstract createItem(item: Item): Promise<Item>;
+  abstract getItem(listId: number, id: number): Promise<Item>;
+  abstract getItemVerbose(): Promise<Item>;
+  abstract getItemInList(listId: number, id: number): Promise<Item>;
+  abstract getItemVerboseInList(): Promise<Item>;
+  abstract updateItem(item: Item, listId: number): Promise<Item>;
+  abstract delete(listId: number, id: number): Promise<Item>;
 }

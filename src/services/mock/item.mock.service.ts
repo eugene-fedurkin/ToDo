@@ -1,45 +1,48 @@
 import { Injectable } from '@angular/core';
 
 
-import { IItemService, UserServicesMock } from '../';
-import { Item } from '.../models/';
+import { IItemService } from '../';
+import { Store } from '../../store/store';
+import { Item } from '../../models/';
 
 @Injectable()
 export class ItemServiceMock implements IItemService {
-  constructor(private userServicesMock: UserServicesMock) {
-    userServicesMock.store.currentList.lists.items = [<Item>{ id: 1, title: '', description: '', listId: 2 }];
-  }
-  public createItem(item: Item): Item {
-    let itemNew = new Item;
-    itemNew.id = item.id;
-    itemNew.title = item.title;    
-    itemNew.description = item.description;    
-    itemNew.listId = item.listId;
+  constructor(private store: Store) {}
 
-    this.userServicesMock.store.currentList.lists.items = itemNew;
-    return this.userServicesMock.store.currentList.lists.items ;
+  private nextId: number = 0;
+
+  public createItem(item: Item): Promise<Item> {
+    let newItem = new Item();
+    newItem.id = this.nextId++;
+    newItem.title = item.title;    
+    newItem.description = item.description;
+    newItem.listId = item.listId;
+
+    this.store.saveItem(newItem);
+    return Promise.resolve(newItem);
   }
-  public getItem(): Item {
-    return this.userServicesMock.store.currentList.lists.items;
+  public getItem(listId: number, id: number): Promise<Item> { // id ???
+    for (let item of this.store.currentUser.lists[listId].items) {
+      if (item.id === id) return Promise.resolve(item);
+    }
   }
-  public getItemVerbose(): Item {
+
+  public getItemVerbose(): Promise<Item> {
     return null;
   }
-  public getItemInList(): Item {
-    return this.userServicesMock.store.currentList.lists.items;
+
+  public getItemInList(listId: number, id: number): Promise<Item> { // ???
+    return this.getItem(listId, id);
   }
-  public getItemVerboseInList(): Item {
+  public getItemVerboseInList(): Promise<Item> {
     return null;
   }
-  public updateItem(item: Item): Item {
-    this.userServicesMock.store.currentList.lists.items.title = item.title;
-    this.userServicesMock.store.currentList.lists.items.listId = item.listId;
-    this.userServicesMock.store.currentList.lists.items.description = item.description;
-    
-    return this.userServicesMock.store.currentList.lists;
+  public updateItem(item: Item, listId: number): Promise<Item> {
+    this.store.saveItem(item, listId);    
+    return;
   }
-  public delete(): Item {
-    this.userServicesMock.store.currentList.lists.items = null;
+  public delete(listId: number, id: number): Promise<Item> {
+    this.store.deleteItem(listId, id);
     return null;
   }
 }

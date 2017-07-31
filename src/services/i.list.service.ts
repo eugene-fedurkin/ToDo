@@ -1,9 +1,9 @@
 import { List } from '../models/';
 
-export interface IListService {
-  createList(list: List): Promise<List>;
-  getList(): Promise<List>;
-  getListVerbose(): Promise<List>;
-  updateList(title: string): Promise<List>;
-  delete(): Promise<List>;
+export abstract class IListService {
+  abstract createList(list: List): Promise<List>;
+  abstract getList(id: number): Promise<List>;
+  abstract getListVerbose(): Promise<List>;
+  abstract updateList(list: List, id: number): Promise<List>;
+  abstract delete(id: number): Promise<List>;
 }
