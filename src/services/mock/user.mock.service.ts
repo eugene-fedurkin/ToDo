@@ -3,31 +3,32 @@ import { Injectable } from '@angular/core';
 import { IUserService } from '../';
 import { Credentials, User } from '../../models';
 import { Store } from '../../store/store';
+import { MockInitializer } from './store.mock.initializer';
 
 
 @Injectable()
 export class UserServicesMock implements IUserService {
-  constructor (private store: Store) {
-    store.currentUser = <User>{ email: '', lists: [] };
+  constructor (public store: Store) {
+    MockInitializer.initialize(store);
   }
-  public register(credentials: Credentials): User {
+  public register(credentials: Credentials): Promise<User> {
     let user = new User();
     user.email = credentials.email;
     user.lists = null;
     this.store.saveUser(user);
-    return user;
+    return Promise.resolve(user);
   }
-  public getUser(): User {
-    return this.store.currentUser;
+  public getUser(): Promise<User> {
+    return Promise.resolve(this.store.currentUser);
   }
-  public getUserVerbose(): User {
+  public getUserVerbose(): Promise<User> {
     return null;
   }
-  public updateUser(email: string): User {
+  public updateUser(email: string): Promise<User> {
     this.store.currentUser.email = email; // ???
-    return this.store.currentUser;
+    return Promise.resolve(this.store.currentUser);
   }
-  public delete(): User {
+  public delete(): Promise<User> {
     this.store.deleteUser();
     return null;
   }

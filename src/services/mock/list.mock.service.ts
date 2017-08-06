@@ -12,12 +12,9 @@ export class ListServicesMock implements IListService {
   private nextId: number = 0;
 
   createList(list: List): Promise<List> {
-    let listNew = new List();
-    listNew.id = this.nextId++;
-    listNew.title = list.title;
-    listNew.items = list.items;
-    this.store.saveList(listNew);
-    return Promise.resolve(listNew);
+    list.id = this.nextId++;
+    this.store.saveList(list);
+    return Promise.resolve(list);
   }
 
   getList(id: number): Promise<List> {
@@ -29,11 +26,11 @@ export class ListServicesMock implements IListService {
   }
 
   getListVerbose(): Promise<List> {
-    return null; 
+    return Promise.reject(this.store.currentUser.lists); 
   }
 
-  updateList(list: List, id: number): Promise<List> {
-    return this.store.saveList(list, id);
+  updateList(list: List): Promise<List> { //can create list
+    return this.store.saveList(list);
   }
 
   delete(id: number): Promise<List> {

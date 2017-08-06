@@ -6,6 +6,6 @@ export abstract class IItemService {
   abstract getItemVerbose(): Promise<Item>;
   abstract getItemInList(listId: number, id: number): Promise<Item>;
   abstract getItemVerboseInList(): Promise<Item>;
-  abstract updateItem(item: Item, listId: number): Promise<Item>;
+  abstract updateItem(item: Item): Promise<Item>;
   abstract delete(listId: number, id: number): Promise<Item>;
 }

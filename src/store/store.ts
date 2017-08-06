@@ -8,16 +8,23 @@ export class Store {
 
   public saveUser(user: User) {
     if (!this.currentUser) this.currentUser = user;
+    else return false;
   }
 
   public deleteUser() {
     this.currentUser = null;
   }
 
-  public saveList(currentList: List, id?: number) {
+  public saveList(currentList: List) {
+    if (this.currentUser.lists === null) {
+      this.currentUser.lists = [currentList];
+      return;
+    }
     for (let list of this.currentUser.lists) {
-      if (list.id === currentList.id) list.title = currentList.title;
-      return Promise.resolve(list);
+      if (list.id === currentList.id) {
+        list.title = currentList.title;
+        return Promise.resolve(list);
+      }
     }
     this.currentUser.lists.push(currentList);
     return Promise.resolve(currentList);
@@ -32,8 +39,8 @@ export class Store {
     }
   }
 
-  public saveItem(currentItem: Item, listId?: number) {
-    let list = this.currentUser.lists.find(list => list.id === listId);
+  public saveItem(currentItem: Item) {
+    let list = this.currentUser.lists.find(list => list.id === currentItem.listId);
     //let item = list.items.find(item => currentItem.id === item.id);
     
     for (let item in list.items) {
@@ -42,7 +49,7 @@ export class Store {
         return;
       }
     }
-    list.items.push(currentItem);
+      list.items.push(currentItem);    
   }
 
   public deleteItem(listId: number, id: number) {

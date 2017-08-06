@@ -1,9 +1,9 @@
 import { Credentials, User } from '../models/';
 
 export abstract class IUserService {
-  abstract register(credential: Credentials): User;
-  abstract getUser(): User;
-  abstract getUserVerbose(): User;
-  abstract updateUser(email: string): User;
-  abstract delete(): User;
+  abstract register(credential: Credentials): Promise<User>;
+  abstract getUser(): Promise<User>;
+  abstract getUserVerbose(): Promise<User>;
+  abstract updateUser(email: string): Promise<User>;
+  abstract delete(): Promise<User>;
 }

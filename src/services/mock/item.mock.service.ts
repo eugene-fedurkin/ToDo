@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 import { IItemService } from '../';
 import { Store } from '../../store/store';
 import { Item } from '../../models/';
@@ -12,17 +11,14 @@ export class ItemServiceMock implements IItemService {
   private nextId: number = 0;
 
   public createItem(item: Item): Promise<Item> {
-    let newItem = new Item();
-    newItem.id = this.nextId++;
-    newItem.title = item.title;    
-    newItem.description = item.description;
-    newItem.listId = item.listId;
+    item.id = this.nextId++;
 
-    this.store.saveItem(newItem);
-    return Promise.resolve(newItem);
+    this.store.saveItem(item);
+    return Promise.resolve(item);
   }
   public getItem(listId: number, id: number): Promise<Item> { // id ???
-    for (let item of this.store.currentUser.lists[listId].items) {
+    let list = this.store.currentUser.lists.find(list => list.id === listId);
+    for (let item of list.items) {
       if (item.id === id) return Promise.resolve(item);
     }
   }
@@ -34,13 +30,16 @@ export class ItemServiceMock implements IItemService {
   public getItemInList(listId: number, id: number): Promise<Item> { // ???
     return this.getItem(listId, id);
   }
+
   public getItemVerboseInList(): Promise<Item> {
     return null;
   }
-  public updateItem(item: Item, listId: number): Promise<Item> {
-    this.store.saveItem(item, listId);    
+
+  public updateItem(item: Item): Promise<Item> {
+    this.store.saveItem(item);    
     return;
   }
+  
   public delete(listId: number, id: number): Promise<Item> {
     this.store.deleteItem(listId, id);
     return null;

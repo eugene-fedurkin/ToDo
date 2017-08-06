@@ -1,5 +1,22 @@
 <div>
-    <div>Sign up</div>
-    Email: <input type="text" [(ngModel)]="inp" />
-    <button (click)="getInput()">Enter</button>
+  <div>Sign up</div>
+  <div>
+    Email:   
+    <input [(ngModel)]="newEmail" #email="ngModel" required pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}" />
+  </div>
+  <div>
+    <input [(ngModel)]="pass" #password="ngModel" required pattern="[0-9a-zA-Z!@#$%]{5,}"/>
+    <div [hidden]="email.valid || email.untouched">
+        invalid email
+    </div>
+  </div>
+  <button [disabled]="email.invalid || password.invalid" (click)="register()">Enter</button>
+  <button (click)="getUser()">get</button>
+  <button (click)="changeEmail()">Fix email</button>
+  <button (click)="deleteUser()">delete Accaunt</button>
+  
 </div>
+
+<div>
+</div>
+                    
