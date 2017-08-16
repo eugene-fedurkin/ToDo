@@ -16,13 +16,13 @@ export class Store {
   }
 
   public saveList(currentList: List) {
-    if (this.currentUser.lists === null) {
+    if (!this.currentUser.lists) {
       this.currentUser.lists = [currentList];
       return;
     }
     for (let list of this.currentUser.lists) {
       if (list.id === currentList.id) {
-        list.title = currentList.title;
+        this.updateListProps(list, currentList);
         return Promise.resolve(list);
       }
     }
@@ -42,14 +42,15 @@ export class Store {
   public saveItem(currentItem: Item) {
     let list = this.currentUser.lists.find(list => list.id === currentItem.listId);
     //let item = list.items.find(item => currentItem.id === item.id);
-    
+
     for (let item in list.items) {
       if (list.items[item].id === currentItem.id) {
         list.items.splice(+item, 1, currentItem);
+        this.updateItemProps(list.items[item], currentItem);
         return;
       }
     }
-      list.items.push(currentItem);    
+    list.items.push(currentItem);
   }
 
   public deleteItem(listId: number, id: number) {
@@ -62,4 +63,15 @@ export class Store {
       }
     }
   }
+
+  private updateItemProps(pastItem: Item, requiredItem: Item) {
+    pastItem.title = requiredItem.title;
+    pastItem.description = requiredItem.description;
+  }
+
+  private updateListProps(pastList: List, requiredList: List) {
+    pastList.title = requiredList.title;
+    pastList.items = requiredList.items;
+  }
+
 }

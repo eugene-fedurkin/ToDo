@@ -6,11 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { routingConfig } from './routes';
 import { IItemService, IListService, IUserService, UserServicesMock, ItemServiceMock, ListServicesMock } from './services';
 import { Store } from './store/store';
-import { AppComponent, ToDo, ItemExample, ListExample } from './components';
+import { AppComponent, Register, ItemExample, ListExample, SignUp } from './components';
 
 @NgModule({
-    imports: [BrowserModule, HttpModule, FormsModule, routingConfig],
-    declarations: [AppComponent, ToDo, ItemExample, ListExample],
+    imports: [BrowserModule, HttpModule, FormsModule, routingConfig ],
+    declarations: [AppComponent, Register, ItemExample, ListExample, SignUp],
     providers: [Store,
         {provide: IUserService, useClass: UserServicesMock},
         {provide: IListService, useClass: ListServicesMock},

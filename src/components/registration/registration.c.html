@@ -1,0 +1,30 @@
+<div>
+  <h2 class="mainTitle">ToDo Angular 2</h2>
+  <span [hidden]="toggleButtons">
+    <button>Sign in</button>
+    <button (click)="turnModal()">Sign up</button>
+  </span>
+  <span>
+    {{user?.email}}
+    <button (click)="deleteUser()">Sign out</button>
+  </span>
+</div>
+
+<div [hidden]="toggleModal" class="signIn">
+  <div>
+    Email:
+    <input [(ngModel)]="newEmail" #email="ngModel" required pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}" />
+  </div>
+  <div>
+    Password:
+    <input [(ngModel)]="pass" #password="ngModel" required pattern="[0-9a-zA-Z!@#$%]{5,}"/>
+  </div>
+  <div [hidden]="email.valid || email.untouched">
+      invalid email
+  </div>
+  <button [disabled]="email.invalid || password.invalid" (click)="register()">Sign up</button>
+  <button (click)="getUser()">get</button>
+  <button (click)="changeEmail()">Fix email</button>
+</div>
+<list></list>
+<items></items>
