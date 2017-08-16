@@ -28,8 +28,8 @@ export class BaseHttpService {
         .toPromise<RT>();
     }
 
-    protected httpDelete<RT>(): Promise<RT> {
-        throw new Error('Not implemented');
+    protected httpDelete<RT>(endpoint: string): Promise<RT> {
+        return this.http.delete(`${this.host}/${endpoint}`, this.options).map(response => this.getJson<RT>(response)).toPromise<RT>()
     }
     
 

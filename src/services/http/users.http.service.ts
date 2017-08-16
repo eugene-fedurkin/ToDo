@@ -9,11 +9,11 @@ export class UserHttpService extends BaseHttpService implements IUserService {
     }
 
     public register(credential: Credentials): Promise<User> {
-        return this.httpPost('users', credential);
+        return this.httpPost('api/users', credential);
     }
 
     public getUser(): Promise<User> {
-        return this.httpGet('users');
+        return this.httpGet('api/users');
     }
 
     public getUserVerbose(): Promise<User> {
@@ -21,10 +21,10 @@ export class UserHttpService extends BaseHttpService implements IUserService {
     }
 
     public updateUser(email: string): Promise<User> {
-        return this.httpPut('users', email);
+        return this.httpPut('api/users', email);
     }
 
     public delete(): Promise<User> {
-        throw new Error("Method not implemented.");
+        return this.httpDelete('api/user');
     }
 }
