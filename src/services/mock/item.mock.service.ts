@@ -16,10 +16,11 @@ export class ItemServiceMock implements IItemService {
     this.store.saveItem(item);
     return Promise.resolve(item);
   }
-  public getItem(listId: number, id: number): Promise<Item> { // id ???
-    let list = this.store.currentUser.lists.find(list => list.id === listId);
-    for (let item of list.items) {
-      if (item.id === id) return Promise.resolve(item);
+  public getItem(id: number): Promise<Item> {
+    for (let list of this.store.currentUser.lists) {
+      for (let item of list.items) {
+        if (item.id === id) return Promise.resolve(item);
+      }
     }
   }
 
@@ -27,21 +28,21 @@ export class ItemServiceMock implements IItemService {
     return null;
   }
 
-  public getItemInList(listId: number, id: number): Promise<Item> { // ???
-    return this.getItem(listId, id);
+  public getItemsInList(id: number): Promise<Item> { // ???
+    return this.getItem(id);
   }
 
-  public getItemVerboseInList(): Promise<Item> {
+  public getItemsInListVerbose(): Promise<Item> {
     return null;
   }
 
-  public updateItem(item: Item): Promise<Item> {
-    this.store.saveItem(item);    
+  public updateItem(id: number, item: Item): Promise<Item> {// id not use
+    this.store.saveItem(item);
     return;
   }
   
-  public delete(listId: number, id: number): Promise<Item> {
-    this.store.deleteItem(listId, id);
+  public delete(id: number): Promise<Item> {
+    this.store.deleteItem(id);
     return null;
   }
 }

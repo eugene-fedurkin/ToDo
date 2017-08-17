@@ -10,7 +10,7 @@ import { Store } from '../../store/store';
     template: require('./registration.c.html'),
     styles: [require('./registration.c.css')]
 })
-export class Register implements OnInit { // DoCheck dont work to this.user
+export class Register implements OnInit {
     constructor(private userService: IUserService,
         private readonly store: Store) {}
     private newEmail: string;
@@ -29,6 +29,10 @@ export class Register implements OnInit { // DoCheck dont work to this.user
     private turnModal() {
         this.toggleModal = !this.toggleModal;
         console.log(this.toggleModal)
+    }
+
+    private getUser() {
+        this.userService.getUser().then(r => console.log(r))
     }
 
     private register() {

@@ -7,14 +7,26 @@ import { Store } from '../../store/store';
 
 @Injectable()
 export class ListServicesMock implements IListService {
-  constructor(private store: Store) {}
+
+  constructor(private store: Store) { }
 
   private nextId: number = 0;
 
-  createList(list: List): Promise<List> {
+  createList(title: string): Promise<List> {
+    let list = new List();
     list.id = this.nextId++;
+    list.title = title;
+    list.items = [];
     this.store.saveList(list);
     return Promise.resolve(list);
+  }
+
+  getLists(id: number): Promise<List[]> {
+    return Promise.resolve(this.store.currentUser.lists)
+  }
+  
+  getListsVerbose(id: number): Promise<List> {
+    throw new Error("Method not implemented.");
   }
 
   getList(id: number): Promise<List> {
@@ -29,7 +41,11 @@ export class ListServicesMock implements IListService {
     return Promise.reject(this.store.currentUser.lists); 
   }
 
-  updateList(list: List): Promise<List> { //can create list
+  updateList(id: number, title: string): Promise<List> { //can create list
+    let list = new List();
+    list.id = id;
+    list.title = title;
+    list.items = [];
     return this.store.saveList(list);
   }
 

@@ -6,13 +6,14 @@ import { Injectable } from '@angular/core';
 export class Store {
   public currentUser: User;
 
-  public saveUser(user: User) {
+  public saveUser(user: User): User {
     if (!this.currentUser) this.currentUser = user;
-    else return false;
+    else return this.currentUser;
   }
 
-  public deleteUser() {
+  public deleteUser(): User {
     this.currentUser = null;
+    return this.currentUser;
   }
 
   public saveList(currentList: List) {
@@ -30,7 +31,18 @@ export class Store {
     return Promise.resolve(currentList);
   }
 
-  public deleteList(id: number) {
+  public saveLists(currentLists: List[]): List[] {
+    if (!this.currentUser.lists) {
+      this.currentUser.lists = currentLists;
+      return currentLists;
+    }
+    for (let list of currentLists) {
+      this.saveList(list);
+    }
+    return currentLists;
+  }
+
+  public deleteList(id: number): List {
     for (let i in this.currentUser.lists) {
       if (this.currentUser.lists[i].id === id) {
         this.currentUser.lists.splice(+i, 1);
@@ -39,7 +51,7 @@ export class Store {
     }
   }
 
-  public saveItem(currentItem: Item) {
+  public saveItem(currentItem: Item): Item {
     let list = this.currentUser.lists.find(list => list.id === currentItem.listId);
     //let item = list.items.find(item => currentItem.id === item.id);
 
@@ -47,19 +59,19 @@ export class Store {
       if (list.items[item].id === currentItem.id) {
         list.items.splice(+item, 1, currentItem);
         this.updateItemProps(list.items[item], currentItem);
-        return;
+        return list.items[item];
       }
     }
     list.items.push(currentItem);
   }
 
-  public deleteItem(listId: number, id: number) {
-    let list = this.currentUser.lists.find(list => list.id === listId);
-    
-    for (let item in list.items) {
-      if (list.items[item].id === id) {
-        list.items.splice(+item, 1);
-        return;
+  public deleteItem(id: number): Item {
+    for (let list of this.currentUser.lists) {
+      for (let item in list.items) {
+        if (list.items[item].id === id) {
+          list.items.splice(+item, 1);
+          return;
+        }
       }
     }
   }

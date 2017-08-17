@@ -12,19 +12,13 @@ export class ListExample {
   constructor(private iListService: IListService) {}
 
   private create() {
-    let list = new List();
-    list.title = this.title;
-    list.items = [];
-    this.iListService.createList(list);
+    this.iListService.createList(this.title);
   }
   private get() {
     this.iListService.getList(this.id).then(i => console.log(i));
   }
   private update() {
-    let list = new List();
-    list.title = this.title;
-    list.id = this.id;
-    this.iListService.updateList(list);    
+    this.iListService.updateList(this.id, this.title);
   }
   private delete() {
     this.iListService.delete(this.id);

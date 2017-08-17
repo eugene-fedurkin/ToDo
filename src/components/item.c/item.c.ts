@@ -23,7 +23,7 @@ export class ItemExample {
   }
 
   private getItem() {
-    this.iItemService.getItem(this.listId, this.id).then(i => console.log(i));
+    this.iItemService.getItem(this.id).then(i => console.log(i));
   }
   
   private update() {
@@ -32,6 +32,6 @@ export class ItemExample {
     item.title = this.title;
     item.listId = this.listId;
     item.description = '';
-    this.iItemService.updateItem(item);
+    this.iItemService.updateItem(this.id, item);// id~
   }
 }

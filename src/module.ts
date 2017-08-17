@@ -7,14 +7,15 @@ import { routingConfig } from './routes';
 import { IItemService, IListService, IUserService, UserServicesMock, ItemServiceMock, ListServicesMock } from './services';
 import { Store } from './store/store';
 import { AppComponent, Register, ItemExample, ListExample, SignUp } from './components';
+import { UserHttpService, ListHttpService, ItemHttpService } from './services/http';
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule, routingConfig ],
     declarations: [AppComponent, Register, ItemExample, ListExample, SignUp],
     providers: [Store,
-        {provide: IUserService, useClass: UserServicesMock},
-        {provide: IListService, useClass: ListServicesMock},
-        {provide: IItemService, useClass: ItemServiceMock}
+        {provide: IUserService, useClass: UserHttpService},
+        {provide: IListService, useClass: ListHttpService},
+        {provide: IItemService, useClass: ItemHttpService}
     ],
     bootstrap: [AppComponent]
 })

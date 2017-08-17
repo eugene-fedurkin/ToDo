@@ -22,10 +22,10 @@ export class UserServicesMock implements IUserService {
     return Promise.resolve(this.store.currentUser);
   }
   public getUserVerbose(): Promise<User> {
-    return null;
+    return Promise.resolve(this.store.currentUser);
   }
   public updateUser(email: string): Promise<User> {
-    this.store.currentUser.email = email; // ???
+    this.store.currentUser.email = email;
     return Promise.resolve(this.store.currentUser);
   }
   public delete(): Promise<User> {

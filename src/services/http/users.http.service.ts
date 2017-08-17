@@ -1,30 +1,34 @@
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
+
 import { IUserService } from '../';
 import { User, Credentials } from '../../models';
 import { BaseHttpService } from '.';
+import { Store } from '../../store/store';
 
+@Injectable()
 export class UserHttpService extends BaseHttpService implements IUserService {
-    constructor(protected readonly http: Http) {
+    constructor(http: Http, private readonly store: Store) {
         super(http);
     }
 
     public register(credential: Credentials): Promise<User> {
-        return this.httpPost('api/users', credential);
+        return this.httpPost<User>('api/users', credential).then(user => this.store.saveUser(user));
     }
 
     public getUser(): Promise<User> {
-        return this.httpGet('api/users');
+        return this.httpGet<User>('api/users').then(user => this.store.saveUser(user));
     }
 
     public getUserVerbose(): Promise<User> {
-        return this.httpGet('users/verbose');
+        return this.httpGet<User>('users/verbose').then(user => this.store.saveUser(user));
     }
 
     public updateUser(email: string): Promise<User> {
-        return this.httpPut('api/users', email);
+        return this.httpPut<User>('api/users', email).then(user => this.store.saveUser(user));
     }
 
     public delete(): Promise<User> {
-        return this.httpDelete('api/user');
+        return this.httpDelete('api/user').then(user => this.store.deleteUser());
     }
 }
