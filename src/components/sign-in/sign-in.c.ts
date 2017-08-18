@@ -4,19 +4,19 @@ import { Credentials } from '../../models';
 import { IUserService } from '../../services/i.user.service';
 
 @Component({
-    selector: 'sign-up',
-    template: require('./sign-up.c.html'),
-    styles: [require('./sign-up.c.css')]
+    selector: 'regist',
+    template: require('./sign-in.c.html'),
+    styles: [require('./sign-in.c.css')]
 })
-export class SignUp {
+export class SignIn {
     constructor(private userService: IUserService,
         private readonly store: Store) {}
 
         private newEmail: string;
         private pass: any;
-        private validationMessage: string;
+        private validationMessage: string = 'Incorrect your email or password';
 
-    private register() {
+    private signIn() {
         const regExp = /^\w+@\w{2,8}\.\w{2,4}$/i;
 
         if (!regExp.test(this.newEmail)) {
@@ -32,4 +32,4 @@ export class SignUp {
         credential.password = this.pass;
         this.userService.register(credential);
     }
-} 
+}

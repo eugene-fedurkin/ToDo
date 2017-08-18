@@ -1,26 +1,32 @@
-import { Component } from '@angular/core';
-import { List } from '../../models';
-import { IListService } from '../../services/i.list.service';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { IItemService } from '../../services';
+import { Item } from '../../models';
 
 @Component({
-  selector: 'list',
-  template: require('./list.c.html')
+    selector: 'list',
+    template: require('./list.c.html'),
+    styles: [require('./list.c.css')]
 })
-export class ListExample {
-  private title: string;
-  private id: number; // ???
-  constructor(private iListService: IListService) {}
+export class List implements OnDestroy {
+    public listId: number;
+    private title: string;
+    private subscription: Subscription;
+    constructor(private activatedRoute: ActivatedRoute,
+        private iItemService: IItemService) {
+        this.subscription = activatedRoute.params.subscribe(params => this.listId = params['listId']);
+   }
 
-  private create() {
-    this.iListService.createList(this.title);
+   private create() {
+    let item = new Item();
+    item.title = this.title;
+    item.description = '';
+    item.listId = this.listId;
+    this.iItemService.createItem(item);
   }
-  private get() {
-    this.iListService.getList(this.id).then(i => console.log(i));
-  }
-  private update() {
-    this.iListService.updateList(this.id, this.title);
-  }
-  private delete() {
-    this.iListService.delete(this.id);
-  }
+
+   ngOnDestroy() {
+    this.subscription.unsubscribe();
+   }
 }

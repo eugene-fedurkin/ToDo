@@ -1,0 +1,9 @@
+.header {
+  background: #24292e;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+span {
+  line-height: 63px;
+}

@@ -1,2 +1,12 @@
-<regist></regist>
+<div class="header">
+  <h2 class="mainTitle">ToDo Angular 2</h2>
+  <span [hidden]="toggleButtons">
+    <button><a routerLink="/signIn">Sign in</a></button>
+    <button><a routerLink="/signUp">Sign up</a> </button>
+  </span>
+  <span>
+    {{user?.email}}
+  </span>
+</div>
+
 <router-outlet></router-outlet>

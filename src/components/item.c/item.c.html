@@ -1,12 +1,4 @@
 <div>
-  <br />
-  title <input type="text" [(ngModel)]="title">
-  listId <input type="number" [(ngModel)]="listId">
-  id <input type="number" [(ngModel)]="id">
-  
-  <button (click)="create()">Create item</button>
-  <button (click)="getItem()">get item</button>
-  <button (click)="update()">change title</button>
-  
-
+  <h1>{{item?.title}}</h1>
+  <p>{{item?.description}}</p>
 </div>

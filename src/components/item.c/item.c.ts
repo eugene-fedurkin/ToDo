@@ -1,37 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
+import { Item as ItemModel } from '../../models';
 import { IItemService } from '../../services/i.item.service';
-import { Item } from '../../models';
+
 
 @Component({
-  selector: 'items',
-  template: require('./item.c.html')
+    selector: 'item',
+    template: require('./item.c.html'),
+    styles: [require('./item.c.css')]
 })
-export class ItemExample {
-  private title: string;
-  private listId: number;
-  private id: number;
+export class Item implements OnDestroy {
+    private subscription: Subscription;
+    private itemId: number;
+    private item: ItemModel;
+    
+    constructor(private iItemService: IItemService, private activatedRoute: ActivatedRoute) {
+        this.subscription = activatedRoute.params.subscribe(params => this.loadItem(params));
+   }
 
-  constructor(private iItemService: IItemService) {
-  }
-
-  private create() {
-    let item = new Item();
-    item.title = this.title;
-    item.listId = this.listId;
-    item.description = '';
-    this.iItemService.createItem(item);
-  }
-
-  private getItem() {
-    this.iItemService.getItem(this.id).then(i => console.log(i));
-  }
-  
-  private update() {
-    let item = new Item();
-    item.id = this.id;
-    item.title = this.title;
-    item.listId = this.listId;
-    item.description = '';
-    this.iItemService.updateItem(this.id, item);// id~
-  }
+   private loadItem(params: any) {
+    this.itemId = +params['itemId'];
+    this.iItemService.getItem(this.itemId).then(r => this.item = r);
+   }
+   ngOnDestroy() {
+    this.subscription.unsubscribe();
+   }
 }

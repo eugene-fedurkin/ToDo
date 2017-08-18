@@ -1,0 +1,49 @@
+div {
+  border: 2px solid #24292e;
+  width: 363px;
+}
+ul {
+  padding-left: 15px;
+  border-bottom: 1px solid;
+  padding-bottom: 15px;
+}
+li {
+  list-style-type: none;
+  height: 61px;
+  background: #24292e;
+  width: 330px;
+  margin: 2px
+}
+a {
+  text-decoration: none;
+  color: white;
+  line-height: 63px;
+  font-size: 23px;
+  padding: 18px 258px 18px 18px;
+}
+input {
+  margin-left: 15px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 38%;
+  line-height: 20px;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #d1d5da;
+  font-size: 14px;
+  padding: 6px 8px;
+}
+button {
+  width: 37%;
+  border-radius: 3px;
+  padding: 6px 2px;
+  outline: none;
+  border: 1px;
+  margin-top: 15px;
+  background: cadetblue;
+  color: white;
+}
+label {
+  display: block;
+  padding-left: 15px;
+}

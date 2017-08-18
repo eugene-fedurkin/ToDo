@@ -6,12 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { routingConfig } from './routes';
 import { IItemService, IListService, IUserService, UserServicesMock, ItemServiceMock, ListServicesMock } from './services';
 import { Store } from './store/store';
-import { AppComponent, Register, ItemExample, ListExample, SignUp } from './components';
+import { AppComponent, SignIn, Items, Item, Lists, List, SignUp } from './components';
 import { UserHttpService, ListHttpService, ItemHttpService } from './services/http';
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule, routingConfig ],
-    declarations: [AppComponent, Register, ItemExample, ListExample, SignUp],
+    declarations: [AppComponent, SignIn, Items, Item, Lists, List, SignUp],
     providers: [Store,
         {provide: IUserService, useClass: UserHttpService},
         {provide: IListService, useClass: ListHttpService},

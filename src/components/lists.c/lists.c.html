@@ -1,0 +1,9 @@
+<div>
+  <ul>
+    <li *ngFor="let list of lists"><a routerLink="list/{{list.id}}">{{list.title}}</a></li>
+  </ul>
+  <label for="CreateList">Create list</label>
+  <input id="CreateList" type="text" [(ngModel)]="title">
+  <button (click)="create()">Create</button>
+</div>
+<router-outlet></router-outlet>

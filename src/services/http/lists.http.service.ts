@@ -14,30 +14,30 @@ export class ListHttpService extends BaseHttpService implements IListService {
     }
 
     getLists(id: number): Promise<List[]> { // need saveLists
-        return this.httpGet<List[]>(`/api/lists/${id}`).then(lists => this.store.saveLists(lists));
+        return this.httpGet<List[]>(`api/lists/${id}`).then(lists => this.store.saveLists(lists));
     }
 
-    getListsVerbose(id: number): Promise<List> {
-        return this.httpGet<List>(`/api/lists/${id}/verbose`).then(list => this.store.saveList(list));
+    getListsVerbose(): Promise<List[]> {
+        return this.httpGet<List[]>(`api/lists/verbose`).then(list => this.store.saveLists(list));
     }
 
     createList(title: string): Promise<List> {
-        return this.httpPost<List>('api/lists', title).then(list => this.store.saveList(list));
+        return this.httpPost<List>('api/lists', {title}).then(list => this.store.saveList(list));
     }
 
     getList(id: number): Promise<List> {
-        return this.httpGet<List>(`/api/lists/${id}`).then(list => this.store.saveList(list));
+        return this.httpGet<List>(`api/lists/${id}`).then(list => this.store.saveList(list));
     }
 
     getListVerbose(id: number): Promise<List> {
-        return this.httpGet<List>(`/api/lists/${id}/verbose`).then(list => this.store.saveList(list));
+        return this.httpGet<List>(`api/lists/${id}/verbose`).then(list => this.store.saveList(list));
     }
 
     updateList(id: number, title: string): Promise<List> {
-        return this.httpPut<List>(`/api/lists/${id}`, title).then(list => this.store.saveList(list))
+        return this.httpPut<List>(`api/lists/${id}`, title).then(list => this.store.saveList(list))
     }
 
     delete(id: number): Promise<List> {
-        return this.httpDelete<List>(`/api/lists/${id}`).then(list => this.store.deleteList(list.id));
+        return this.httpDelete<List>(`api/lists/${id}`).then(list => this.store.deleteList(list.id));
     }
 }

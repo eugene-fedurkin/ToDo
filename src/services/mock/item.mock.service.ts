@@ -6,7 +6,11 @@ import { Item } from '../../models/';
 
 @Injectable()
 export class ItemServiceMock implements IItemService {
-  constructor(private store: Store) {}
+  
+  getItemsInList(listId: number): Promise<Item[]> {
+    throw new Error("Method not implemented.");
+  }
+  constructor(private store: Store) { }
 
   private nextId: number = 0;
 
@@ -26,10 +30,6 @@ export class ItemServiceMock implements IItemService {
 
   public getItemVerbose(): Promise<Item> {
     return null;
-  }
-
-  public getItemsInList(id: number): Promise<Item> { // ???
-    return this.getItem(id);
   }
 
   public getItemsInListVerbose(): Promise<Item> {

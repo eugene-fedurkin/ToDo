@@ -1,1 +1,12 @@
-signUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUpsignUp
+<div class="container">
+		<div class="validationMessage" [hidden]="email.valid || email.untouched">
+			{{validationMessage}}
+		</div>
+	</div>
+	<div class="signUp">
+		<label for="login">Email address</label>
+		<input [(ngModel)]="newEmail" #email="ngModel" id="login" required pattern="[a-zA-Z_]+@[a-zA-Z_]+?\.[a-zA-Z]{2,4}" />
+		<label for="password">Password</label>
+		<input [(ngModel)]="pass" #password="ngModel" id="password" required pattern="[0-9a-zA-Z!@#$%]{8,}"/>
+		<button (click)="register()">Sign up</button>
+	</div>

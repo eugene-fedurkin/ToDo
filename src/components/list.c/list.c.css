@@ -1,0 +1,35 @@
+div {
+  position: absolute;
+  top: 85px;
+  left: 39%;
+  border: 2px solid black;
+}
+input {
+  margin-left: 15px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 38%;
+  line-height: 20px;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #d1d5da;
+  font-size: 14px;
+  padding: 6px 8px;
+}
+button {
+  width: 37%;
+  border-radius: 3px;
+  padding: 6px 2px;
+  outline: none;
+  border: 1px;
+  margin-top: 15px;
+  background: cadetblue;
+  color: white;
+}
+label {
+  display: block;
+  margin-left: 15px;
+}
+ul {
+  margin-right: 15px;
+}

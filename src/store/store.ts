@@ -53,7 +53,6 @@ export class Store {
 
   public saveItem(currentItem: Item): Item {
     let list = this.currentUser.lists.find(list => list.id === currentItem.listId);
-    //let item = list.items.find(item => currentItem.id === item.id);
 
     for (let item in list.items) {
       if (list.items[item].id === currentItem.id) {
@@ -63,6 +62,17 @@ export class Store {
       }
     }
     list.items.push(currentItem);
+    return currentItem;
+  }
+
+  public saveItems(currentItems: Item[]): Item[] {
+    let savedItems = [];
+    for (let item of currentItems) {
+      this.saveItem(item);
+      savedItems.push(item);
+    }
+    let list = this.currentUser.lists.find(list => list.id === currentItems[0].listId);
+    return list.items;
   }
 
   public deleteItem(id: number): Item {

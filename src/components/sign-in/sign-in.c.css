@@ -1,0 +1,62 @@
+.mainTitle {
+  display: inline-block
+}
+.signIn {
+  background: white;
+  height: 208px;
+  border: 1px solid #d1d5da;
+  width: 244px;
+  border-radius: 5px;
+  margin: auto;
+  padding: 20px 37px 20px 20px;
+}
+input {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  line-height: 20px;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid #d1d5da;
+  font-size: 14px;
+  padding: 6px 8px;
+}
+input:focus {
+  box-shadow: 0px 0px 6px 1px rgba(91,168,222,1)
+}
+label {
+  display: block;
+  margin-bottom: 7px;
+}
+button {
+  width: 107%;
+  border-radius: 3px;
+  padding: 6px 2px;
+  outline: none;
+  border: 1px;
+  margin-top: 15px;
+  background: cadetblue;
+  color: white;
+}
+button:hover {
+  box-shadow: 0px 0px 1px 2px rgba(95,158,160,.5);
+  transition: .2s;
+}
+button:active {
+  background: #384C4D;
+}
+.container {
+  display: flex;
+}
+.validationMessage {
+  margin: auto;
+  width: 224px;
+  height: 36px;
+  line-height: 36px;
+  padding: 10px;
+  background: #ffdce0;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 21px auto;
+  border: 1px solid #86181d;
+}

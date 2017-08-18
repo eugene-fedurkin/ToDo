@@ -25,7 +25,7 @@ export class ListServicesMock implements IListService {
     return Promise.resolve(this.store.currentUser.lists)
   }
   
-  getListsVerbose(id: number): Promise<List> {
+  getListsVerbose(): Promise<List[]> {
     throw new Error("Method not implemented.");
   }
 
